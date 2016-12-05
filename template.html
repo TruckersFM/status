@@ -1,0 +1,243 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="robots" content="index, follow">
+		<meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+		<meta name="description" content="MP Productions Status Page, We use this page to communicate incidents to our services.">
+		<meta name="author" content="MP Productions">
+		<title>{{ config.title }}</title>
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
+		<link rel="stylesheet" href="style.css">
+		<link rel="icon" href="{{ config.favicon }}">
+
+		<link rel="prefetch" type="application/l10n" href="translations.ini" />
+		<script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', '{{ config.googleanalytics }}', 'auto');
+      ga('set', 'anonymizeIp', true);
+      ga('set', 'forceSSL', true);
+      ga('send', 'pageview');
+    </script>
+
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+        <link href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+        <script type="text/javascript">
+			$( document ).ready(function() {
+				
+				// let's Hide Items
+				$( ".cc-contactpop form").hide();
+				$( ".cc-contactpop i").hide(); 
+				$( ".cc-contactpop p").hide();
+				
+				// Show on elements ".slideDown"
+				$( ".cc-contactpop" ).click(function() {
+					$( ".cc-contactpop form").slideDown(500)
+					$( ".cc-contactpop p").slideDown(500)
+					$( ".cc-contactpop i").slideDown(500)
+				});
+				
+				// Close Hidden Part
+				$( ".cc-contactpop i" ).click(function() {
+					$(this).slideUp(500)
+						$( ".cc-contactpop p").slideUp(500)
+						$( ".cc-contactpop form").slideUp(500)
+					return false
+				});
+			
+			});
+		</script>
+<script src="./js/jquery-2.1.0.min.js"></script>
+<script src="./js/app.js"></script>
+<script src='https://www.google.com/recaptcha/api.js'></script>
+		
+		<link rel="stylesheet" type="text/css" href="//mattsphotos.com.au/remote/files/bootstrap/3.0.0-rc1/css/bootstrap-custom1.min.css">
+		<script type="text/javascript" src="//mattsphotos.com.au/remote/files/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+		<style type="text/css">
+  </style>
+
+  <title>Bootstrap Modal iFrame</title>
+
+  
+    
+
+
+
+
+<script type='text/javascript'>//<![CDATA[
+$(window).load(function(){
+});//]]> 
+</script>
+	</head>
+	<body style="background-color:#222222" link="#ffffff" vlink="#ffffff" alink="#ffffff">
+
+		<main class="wrapper">
+					<div style="text-align:right">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reporting" style="float: right;">Report an Incident</button>
+						<br><br><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#subscribe" style="float: right;">Incident Alerts</button>
+						<br><br><a href="https://twitter.com/MPmattsphotos" class="twitter-follow-button" data-size="large" data-show-count="false" style="float: right;">Follow @MPmattsphotos</a><script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+					</div>
+			<section class="container" id="main">
+				<div class="headername">
+					<a href="http://mpsau.com/statuspg"><img src="{{ config.logo }}" /></a>
+ 					 <h1>{{ config.title }}</h1>
+
+				</div>
+				<br><br><br><br>
+				{% if not panels %}
+					<div class="panel operational" data-l10n-id="systems-operational">
+						All Systems operational.
+					</div>
+				{% else %}
+					{% for severity, systems in panels.items() if systems %}
+					<div class="panel {{ severity }}">
+						<a href="#incidents"><span data-l10n-id="{{ severity.capitalize().replace(" ", '-') }}">{{ severity.capitalize() }}</span> <span data-l10n-id="on">on</span> {% for system in systems %}{{ system }}{% if not loop.last %}, {% endif %}{% endfor %}.</a>
+					</div>
+					{% endfor %}
+				{% endif %}
+
+				<h4 >MP Productions Services</h4>
+				<ul class="systems">
+					{% for system, data in systems.items() %}
+					<li>
+						{{ system }} <span class="status {{ data.status }}" data-l10n-id="{{ data.status.replace(" ", '-') }}">{{ data.status }}</span>
+					</li>
+					{% endfor %}
+				</ul>
+
+				<h4 >MP Productions Client Websites</h4>
+				<ul class="systems">
+					{% for system, data in client_systems.items() %}
+					<li>
+						{{ system }} <span class="status {{ data.status }}" data-l10n-id="{{ data.status.replace(" ", '-') }}">{{ data.status }}</span>
+					</li>
+					{% endfor %}
+				</ul>
+
+				<h4 data-l10n-id="incidents">Incidents</h4>
+				{% if incidents %}
+					{% for incident in incidents %}
+					<div class="incident" id="incidents">
+						<span class="date moment">{{ incident.created }} UTC</span>
+
+						{% if incident.closed %}
+							<span class="label operational float-right" data-l10n-id="resolved">resolved</span>
+						{% else %}
+							<span class="label {{ incident.severity }} float-right" data-l10n-id="{{ incident.severity.replace(" ", '-') }}">{{ incident.severity }}</span>
+						{% endif %}
+						{% for system in incident.systems %}
+							<span class="label system float-right">{{ system }}</span>
+						{% endfor %}
+						<hr/>
+
+						<span class="title">{{ incident.title }}</span>
+						{{ incident.body|safe }}
+						{% for update in incident.updates %}
+							<span class="title"><em>Update <span class="moment">{{ update.created }} UTC</span></em></span>
+							{{ update.body|safe }}
+						{% endfor %}
+					</div>
+					{% endfor %}
+				{% else %}
+					<em data-l10n-id="no.incidents">No incidents available to display at this time.</em>
+				{% endif %}
+			</section>
+
+
+			<footer class="footer">
+				<section class="container">
+					<hr/>
+					<p>{{ config.footer }}<br> <a href="#" data-toggle="modal" data-target="#changelog" style="float: right;">What's New</a></p>
+					
+				</section>
+			</footer>
+
+		</main>
+		<script src="statuspage.js" type="text/javascript"></script>
+   
+
+		
+
+<!-- Modal -->
+<div class="modal fade" id="reporting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Report an Incident</h4>
+      </div>
+      <div class="modal-body">
+	      <p>Have you found an issue with one of our services?<br>
+	      Use this form below to report it, Please provide valid details as we may be required to follow up. <br>
+	      Thank You.<br>
+	      Do not submit passwords or login details via this form.</p>
+          <iframe src="http://mattsphotos.com.au/reporting" width="100%" height="500" frameborder="0" allowtransparency="true"></iframe>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- Modal SUBSCRIBE -->
+<div class="modal fade" id="subscribe" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Subscribe to Alerts</h4>
+      </div>
+      <div class="modal-body">
+	      <p>Would you like direct notifications when an incident occurs? <br>
+	      If so, Please follow the details below.</p>
+          <iframe src="http://mattsphotos.com.au/reporting/mailing" width="100%" height="500" frameborder="0" allowtransparency="true"></iframe>  
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal SUBSCRIBE -->
+<!-- Modal Changelog -->
+<div class="modal fade" id="changelog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">What's New Here</h4>
+      </div>
+      <div class="modal-body">
+	      <p>We're always working hard to update this status page with your suggestions. <br>
+	      Here are some of the latest changes to the status page. </p> 
+	      <br>
+	      <h4>3/12/2016</h4>
+	      <li>We've added this great new What's New feature!</li>
+	      <li>You can now click on the banner at the top of the page to scroll to the incidents when there is an incident occuring</li>
+	      <li>We've tweaked the Report Incident feature, It should now be a bit more easy to make reports</li>
+	      <li>You suggested and we responded! You can now see any closed/resolved incidents from the past 48 hours. Woohoo!</li>
+	      <li>We've began to impliment a new Subscribe feature. From the name you should be able to guess what it does!</li>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal Changelog -->
+	</body>
+</html>
