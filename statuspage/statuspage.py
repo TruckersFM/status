@@ -502,4 +502,4 @@ def is_same_content(c1, c2):
 
 
 if __name__ == '__main__':  # pragma: no cover
-cli()
+    cli()
