@@ -90,9 +90,11 @@ $(window).load(function(){
 				</div>
 				<br><br><br><br>
 				
-					<div class="panel operational" data-l10n-id="systems-operational">
-						All Systems operational.
+					
+					<div class="panel major outage">
+						<a href="#incidents"><span data-l10n-id="Major-outage">Major outage</span> <span data-l10n-id="on">on</span> TruckersFM Panel, http://radio.truckers.fm, http://relay1.truckers.fm, http://relay2.truckers.fm, http://relay3.truckers.fm.</a>
 					</div>
+					
 				
 
 				<h4 >TruckersFM Services</h4>
@@ -111,7 +113,7 @@ $(window).load(function(){
 					</li>
 					
 					<li>
-						TruckersFM Panel <span class="status operational" data-l10n-id="operational">operational</span>
+						TruckersFM Panel <span class="status major outage" data-l10n-id="major-outage">major outage</span>
 					</li>
 					
 					<li>
@@ -128,26 +130,52 @@ $(window).load(function(){
 				<ul class="systems">
 					
 					<li>
-						http://radio.truckers.fm <span class="status operational" data-l10n-id="operational">operational</span>
+						http://radio.truckers.fm <span class="status major outage" data-l10n-id="major-outage">major outage</span>
 					</li>
 					
 					<li>
-						http://relay1.truckers.fm <span class="status operational" data-l10n-id="operational">operational</span>
+						http://relay1.truckers.fm <span class="status major outage" data-l10n-id="major-outage">major outage</span>
 					</li>
 					
 					<li>
-						http://relay2.truckers.fm <span class="status operational" data-l10n-id="operational">operational</span>
+						http://relay2.truckers.fm <span class="status major outage" data-l10n-id="major-outage">major outage</span>
 					</li>
 					
 					<li>
-						http://relay3.truckers.fm <span class="status operational" data-l10n-id="operational">operational</span>
+						http://relay3.truckers.fm <span class="status major outage" data-l10n-id="major-outage">major outage</span>
 					</li>
 					
 				</ul>
 
 				<h4 data-l10n-id="incidents">Incidents</h4>
 				
-					<em data-l10n-id="no.incidents">No incidents available to display at this time.</em>
+					
+					<div class="incident" id="incidents">
+						<span class="date moment">2016-12-30 22:38:30 UTC</span>
+
+						
+							<span class="label major outage float-right" data-l10n-id="major-outage">major outage</span>
+						
+						
+							<span class="label system float-right">TruckersFM Panel</span>
+						
+							<span class="label system float-right">http://radio.truckers.fm</span>
+						
+							<span class="label system float-right">http://relay1.truckers.fm</span>
+						
+							<span class="label system float-right">http://relay2.truckers.fm</span>
+						
+							<span class="label system float-right">http://relay3.truckers.fm</span>
+						
+						<hr/>
+
+						<span class="title">Relay and Panel Outage</span>
+						<p>IMPORTANT - 22:17pm GMT: Please be aware we are currently experiencing technical issues to our Radio servers. Our Web Developer team are looking into the issue and we will keep you updated on all social media outlets. <br>
+Until further notice all scheduled radio shows from our presenters are postponed. We apologies for any inconvenience caused, and we hope to be back on the air as soon as possible.</p>
+
+						
+					</div>
+					
 				
 			</section>
 
